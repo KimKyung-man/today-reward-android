@@ -25,14 +25,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation deps.constraint
-
+    implementation deps.grox
+    implementation deps.grox_command
     implementation deps.rxjava2
     implementation deps.rxbinding2
     implementation deps.support.compat
     implementation deps.support.design
-
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
     androidTestImplementation deps.espresso
