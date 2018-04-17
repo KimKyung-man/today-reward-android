@@ -28,12 +28,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.rxjava2
-    api deps.fire_rx
-    api deps.fire_core
-    api deps.fire_auth
-    api deps.fire_database
-    api deps.fire_store
-    api deps.fire_storage
+    api deps.support.annotation
+    // please add stream, retrofit, gson, rxadapter, gsonconverter, logging
 
     testImplementation deps.junit
 }

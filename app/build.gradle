@@ -34,6 +34,14 @@ dependencies {
 
     implementation deps.rxbinding2
 
+    // firebase 는 google-play services json 파일 떄문에 api 모듈로 못옮김.
+    implementation deps.fire_rx
+    implementation deps.fire_core
+    implementation deps.fire_auth
+    implementation deps.fire_database
+    implementation deps.fire_store
+    implementation deps.fire_storage
+
     implementation deps.constraint
     implementation deps.support.compat
     implementation deps.support.design

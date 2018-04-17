@@ -37,8 +37,9 @@ buildscript {
                 fire_rx       : "com.github.frangsierra:rx2firebase:${versions.rxFirebase}",
 
                 constraint    : "com.android.support.constraint:constraint-layout:${versions.constraint}",
-                'support'     : ['compat': "com.android.support:support-compat:${versions.supportLibrary}",
-                                 'design': "com.android.support:design:${versions.supportLibrary}",],]
+                'support'     : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
+                                 'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
+                                 'design'    : "com.android.support:design:${versions.supportLibrary}",],]
     repositories {
         google()
         jcenter()
