@@ -40,6 +40,7 @@ dependencies {
     implementation deps.fire_database
     implementation deps.fire_store
     implementation deps.fire_storage
+    implementation deps.fire_rx
 
     implementation deps.support.compat
     implementation deps.support.design
