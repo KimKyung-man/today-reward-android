@@ -31,9 +31,21 @@ dependencies {
     implementation deps.grox_command
     implementation deps.rxjava2
     implementation deps.rxbinding2
+
+    implementation deps.glide
+    annotationProcessor deps.glide_compiler
+
+    implementation deps.fire_core
+    implementation deps.fire_auth
+    implementation deps.fire_database
+    implementation deps.fire_store
+    implementation deps.fire_storage
+
     implementation deps.support.compat
     implementation deps.support.design
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
     androidTestImplementation deps.espresso
 }
+
+apply plugin: 'com.google.gms.google-services'
