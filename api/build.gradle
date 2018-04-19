@@ -30,6 +30,10 @@ dependencies {
     api deps.rxjava2
     api deps.support.annotation
     // please add stream, retrofit, gson, rxadapter, gsonconverter, logging
+    api deps.retrofit.core
+    api deps.retrofit.json
+    api deps.retrofit.rx
+    api deps.okhttp.logging
 
     testImplementation deps.junit
 }
