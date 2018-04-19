@@ -27,9 +27,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    api deps.stream
     api deps.rxjava2
     api deps.support.annotation
-    // please add stream, retrofit, gson, rxadapter, gsonconverter, logging
     api deps.retrofit.core
     api deps.retrofit.json
     api deps.retrofit.rx
