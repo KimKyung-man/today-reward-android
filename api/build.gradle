@@ -28,7 +28,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.stream
-    api deps.rxjava2
+    api deps.rxjava
+    api deps.rxandroid
     api deps.support.annotation
     api deps.retrofit.core
     api deps.retrofit.json

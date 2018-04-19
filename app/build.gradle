@@ -32,7 +32,7 @@ dependencies {
     implementation deps.glide
     annotationProcessor deps.glide_compiler
 
-    implementation deps.rxbinding2
+    implementation deps.rxbinding
 
     // firebase 는 google-play services json 파일 떄문에 api 모듈로 못옮김.
     implementation deps.fire_rx
