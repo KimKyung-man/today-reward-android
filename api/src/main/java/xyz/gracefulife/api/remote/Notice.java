@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Notice implements Parcelable {
+  private String id;
   private String title;
   private String contents;
   private LocalDateTime localDateTime;
@@ -20,12 +21,14 @@ public class Notice implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
     dest.writeString(this.title);
     dest.writeString(this.contents);
     dest.writeSerializable(this.localDateTime);
   }
 
   protected Notice(Parcel in) {
+    this.id = in.readString();
     this.title = in.readString();
     this.contents = in.readString();
     this.localDateTime = (LocalDateTime) in.readSerializable();

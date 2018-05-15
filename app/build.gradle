@@ -26,6 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':api')
     implementation deps.grox
     implementation deps.grox_command
 

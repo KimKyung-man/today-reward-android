@@ -1,11 +1,12 @@
 package xyz.gracefulife.api;
 
 
-import io.reactivex.Observable;
+import java.util.List;
+
 import io.reactivex.Single;
 
-public interface DataSource<T> {
-  Single<T> fetch();
+public interface DataSource<T, ID> {
+  Single<T> fetch(ID id);
 
-  Observable<T> fetchAll();
+  Single<List<T>> fetchAll();
 }

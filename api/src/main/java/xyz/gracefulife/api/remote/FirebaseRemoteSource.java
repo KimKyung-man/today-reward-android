@@ -1,10 +1,13 @@
 package xyz.gracefulife.api.remote;
 
+import android.support.annotation.NonNull;
+
+import com.annimon.stream.function.Function;
 import com.annimon.stream.function.Supplier;
 
-import io.reactivex.Observable;
+import java.util.List;
+
 import io.reactivex.Single;
-import lombok.NonNull;
 import xyz.gracefulife.api.DataSource;
 
 /**
@@ -13,25 +16,25 @@ import xyz.gracefulife.api.DataSource;
  * 파이어베이스의 경우 메인 모듈에 종속성이 있으므로, 페치 등의 함수만 가져와서,
  * 실행만 이쪽 데이터소스를 이용하는 것으로 한다.
  */
-public class FirebaseRemoteSource implements DataSource<Notice> {
-  private Supplier<Single<Notice>> singleItemSupplier;
-  private Supplier<Observable<Notice>> multipleItemSupplier;
+public class FirebaseRemoteSource implements DataSource<Notice, String> {
+  private Function<String, Single<Notice>> singleItemSupplier;
+  private Supplier<Single<List<Notice>>> multipleItemSupplier;
 
   private FirebaseRemoteSource() {
   }
 
   public FirebaseRemoteSource(
-      @NonNull Supplier<Single<Notice>> singleItemSupplier,
-      @NonNull Supplier<Observable<Notice>> multipleItemSupplier) {
+      @NonNull Function<String, Single<Notice>> singleItemSupplier,
+      @NonNull Supplier<Single<List<Notice>>> multipleItemSupplier) {
     this.singleItemSupplier = singleItemSupplier;
     this.multipleItemSupplier = multipleItemSupplier;
   }
 
-  @Override public Single<Notice> fetch() {
-    return singleItemSupplier.get();
+  @Override public Single<Notice> fetch(String id) {
+    return singleItemSupplier.apply(id);
   }
 
-  @Override public Observable<Notice> fetchAll() {
+  @Override public Single<List<Notice>> fetchAll() {
     return multipleItemSupplier.get();
   }
 }
