@@ -47,6 +47,9 @@ dependencies {
     implementation deps.support.compat
     implementation deps.support.design
 
+    implementation deps.lombok
+    annotationProcessor deps.lombok
+
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
     androidTestImplementation deps.espresso

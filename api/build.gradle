@@ -33,7 +33,7 @@ dependencies {
     api deps.retrofit.rx
     api deps.okhttp.logging
 
-    api deps.lombok
+    implementation deps.lombok
     annotationProcessor deps.lombok
 
     testImplementation deps.junit
