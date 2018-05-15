@@ -1,18 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-
-
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 27
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -21,12 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    api deps.threetenabp
     api deps.stream
     api deps.rxjava
     api deps.rxandroid
@@ -35,6 +32,9 @@ dependencies {
     api deps.retrofit.json
     api deps.retrofit.rx
     api deps.okhttp.logging
+
+    api deps.lombok
+    annotationProcessor deps.lombok
 
     testImplementation deps.junit
 }

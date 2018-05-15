@@ -17,16 +17,20 @@ buildscript {
                     'retrofit'      : '2.3.0',
                     'okhttp'        : '3.9.1',
                     'stream'        : '1.1.5',
+                    'threetenabp'   : '1.1.0',
 
                     'junit'         : '4.12',
                     'testRunner'    : '1.0.1',
-                    'espresso'      : '3.0.1',]
+                    'espresso'      : '3.0.1',
+
+                    'lombok'        : '1.16.20']
 
     ext.deps = [junit         : "junit:junit:${versions.junit}",
                 testrunner    : "com.android.support.test:runner:${versions.testRunner}",
                 espresso      : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
                 grox          : "com.groupon.grox:grox-core-rx2:${versions.grox}",
                 grox_command  : "com.groupon.grox:grox-commands-rx2:${versions.grox}",
+                threetenabp   : "com.jakewharton.threetenabp:threetenabp:${versions.threetenabp}",
                 stream        : "com.annimon:stream:${versions.stream}",
                 rxjava        : "io.reactivex.rxjava2:rxjava:${versions.rx}",
                 rxandroid     : "io.reactivex.rxjava2:rxjava:${versions.rxAndroid}",
@@ -50,7 +54,9 @@ buildscript {
                 constraint    : "com.android.support.constraint:constraint-layout:${versions.constraint}",
                 'support'     : ['compat'    : "com.android.support:support-compat:${versions.supportLibrary}",
                                  'annotation': "com.android.support:support-annotations:${versions.supportLibrary}",
-                                 'design'    : "com.android.support:design:${versions.supportLibrary}",],]
+                                 'design'    : "com.android.support:design:${versions.supportLibrary}",],
+
+                lombok        : "org.projectlombok:lombok:${versions.lombok}"]
     repositories {
         google()
         jcenter()
