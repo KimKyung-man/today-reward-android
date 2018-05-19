@@ -5,10 +5,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.groupon.grox.Store;
+
+import io.reactivex.disposables.CompositeDisposable;
+import xyz.gracefulife.today.notice.FetchNoticesCommand;
+import xyz.gracefulife.today.notice.NoticeState;
+
+import static com.groupon.grox.RxStores.states;
+import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+
 public class MainActivity extends AppCompatActivity {
+  private static final String TAG = MainActivity.class.getSimpleName();
+
+  private final Store<NoticeState> store = new Store<>(NoticeState.empty());
+  private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +34,22 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab = findViewById(R.id.fab);
     fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
         .setAction("Action", null).show());
+
+    compositeDisposable.add(states(store).observeOn(mainThread()).subscribe(this::updateUI, this::doLog));
+    // perform action
+    compositeDisposable.add(
+        new FetchNoticesCommand(Apps.get().api().getFirebase())
+            .actions()
+            .subscribe(store::dispatch, this::doLog)
+    );
+  }
+
+  private void updateUI(NoticeState noticeState) {
+    Log.i(TAG, "updateUI: " + noticeState.notices);
+  }
+
+  private void doLog(Throwable throwable) {
+    Log.e(TAG, "doLog: throwable = ", throwable);
   }
 
   @Override
@@ -31,16 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
       return true;
     }
-
     return super.onOptionsItemSelected(item);
   }
 }
