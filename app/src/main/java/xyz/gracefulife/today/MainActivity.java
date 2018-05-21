@@ -14,6 +14,8 @@ import com.groupon.grox.Store;
 import io.reactivex.disposables.CompositeDisposable;
 import xyz.gracefulife.today.notice.FetchNoticesCommand;
 import xyz.gracefulife.today.notice.NoticeState;
+import xyz.gracefulife.today.signin.SignInCommand;
+import xyz.gracefulife.today.signin.SignInState;
 
 import static com.groupon.grox.RxStores.states;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
   private static final String TAG = MainActivity.class.getSimpleName();
 
   private final Store<NoticeState> store = new Store<>(NoticeState.empty());
+  private final Store<SignInState> signInTestStore = new Store<>(SignInState.empty());
   private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
   @Override
@@ -33,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab = findViewById(R.id.fab);
     fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show());
+        .setAction("Action", v -> new SignInCommand(Apps.get().getFirebaseAuth(), signInTestStore.getState()).actions()
+            .subscribe(o -> Log.i(TAG, "onCreate: o = " + o))).show());
 
     compositeDisposable.add(states(store).observeOn(mainThread()).subscribe(this::updateUI, this::doLog));
     // perform action
     compositeDisposable.add(
-        new FetchNoticesCommand(Apps.get().api().getFirebase())
+        new FetchNoticesCommand(Apps.get().api().getNotice())
             .actions()
             .subscribe(store::dispatch, this::doLog)
     );

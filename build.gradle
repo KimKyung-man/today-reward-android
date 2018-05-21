@@ -13,7 +13,7 @@ buildscript {
                     'rx'            : '2.1.11',
                     'rxAndroid'     : '2.0.2',
                     'rxBinding'     : '2.0.0',
-                    'rxFirebase'    : '1.4.0',
+                    'rxFirebase'    : '1.4.1',
                     'retrofit'      : '2.3.0',
                     'okhttp'        : '3.9.1',
                     'stream'        : '1.1.5',

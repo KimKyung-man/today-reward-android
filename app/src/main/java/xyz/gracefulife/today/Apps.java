@@ -2,9 +2,11 @@ package xyz.gracefulife.today;
 
 import android.app.Application;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import durdinapps.rxfirebase2.RxFirestore;
+import lombok.Getter;
 import xyz.gracefulife.api.Api;
 import xyz.gracefulife.api.remote.CommonRemoteSource;
 import xyz.gracefulife.api.remote.Faq;
@@ -15,12 +17,14 @@ public class Apps extends Application {
 
   private Api api;
   private FirebaseFirestore firestore;
+  @Getter private FirebaseAuth firebaseAuth;
 
   @Override public void onCreate() {
     super.onCreate();
 
     instance = this;
     firestore = FirebaseFirestore.getInstance();
+    firebaseAuth = FirebaseAuth.getInstance();
   }
 
   public static Apps get() {
