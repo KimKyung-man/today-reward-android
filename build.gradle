@@ -22,12 +22,15 @@ buildscript {
                     'junit'         : '4.12',
                     'testRunner'    : '1.0.1',
                     'espresso'      : '3.0.1',
+                    'random'        : '1.0',
 
                     'lombok'        : '1.16.20']
 
     ext.deps = [junit         : "junit:junit:${versions.junit}",
                 testrunner    : "com.android.support.test:runner:${versions.testRunner}",
                 espresso      : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
+                random        : "com.github.slmyldz:AndroidRandom:${versions.random}",
+
                 grox          : "com.groupon.grox:grox-core-rx2:${versions.grox}",
                 grox_command  : "com.groupon.grox:grox-commands-rx2:${versions.grox}",
                 threetenabp   : "com.jakewharton.threetenabp:threetenabp:${versions.threetenabp}",

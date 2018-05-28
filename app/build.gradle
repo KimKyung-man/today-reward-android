@@ -49,6 +49,7 @@ dependencies {
 
     implementation deps.lombok
     annotationProcessor deps.lombok
+    implementation deps.random
 
     testImplementation deps.junit
     androidTestImplementation deps.testrunner
