@@ -2,8 +2,10 @@ package xyz.gracefulife.today.signin;
 
 import android.util.Log;
 
+import com.google.firebase.auth.AdditionalUserInfo;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.groupon.grox.Action;
 import com.groupon.grox.commands.rxjava2.Command;
 
@@ -26,13 +28,22 @@ public class SignInCommand implements Command {
   @Override public Observable<? extends Action> actions() {
     Log.i(TAG, "actions: email is " + oldState.email);
     return RxFirebaseAuth.signInWithEmailAndPassword(firebaseAuth, oldState.email, oldState.password)
+        .onErrorReturnItem(new AuthResult() {
+          @Override public FirebaseUser getUser() {
+            return null;
+          }
+
+          @Override public AdditionalUserInfo getAdditionalUserInfo() {
+            return null;
+          }
+        })
         .toObservable()
         .take(1)
         .flatMap((Function<AuthResult, ObservableSource<Action>>) authResult -> {
           if (authResult != null && authResult.getUser() != null) {
             return Observable.just(new SignInAction());
           } else {
-            throw new IllegalStateException();
+            return Observable.error(new IllegalStateException("user not found"));
           }
         })
         .onErrorReturn(SignInErrorAction::new);
