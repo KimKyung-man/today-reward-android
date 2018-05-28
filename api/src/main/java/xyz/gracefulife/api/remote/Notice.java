@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 import org.threeten.bp.LocalDateTime;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Notice implements Parcelable {
   private String id;
   private String title;

@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.gracefulife.today.notice;
+package xyz.gracefulife.today.notices;
 
 import com.groupon.grox.Action;
 
-import java.util.List;
+public class FetchNoticesErrorAction implements Action<NoticesState> {
 
-import lombok.AllArgsConstructor;
-import xyz.gracefulife.api.remote.Notice;
+  private String msg;
 
-@AllArgsConstructor
-public class FetchNoticesAction implements Action<NoticeState> {
-  private final List<Notice> notices;
+  public FetchNoticesErrorAction(Throwable error) {
+    this.msg = error.getMessage();
+  }
 
   @Override
-  public NoticeState newState(NoticeState oldState) {
-    return NoticeState.success(notices);
+  public NoticesState newState(NoticesState oldState) {
+    return NoticesState.error(msg);
   }
 }

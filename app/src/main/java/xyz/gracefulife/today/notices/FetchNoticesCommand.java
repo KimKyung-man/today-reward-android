@@ -1,4 +1,4 @@
-package xyz.gracefulife.today.notice;
+package xyz.gracefulife.today.notices;
 
 import com.groupon.grox.Action;
 import com.groupon.grox.commands.rxjava2.Command;

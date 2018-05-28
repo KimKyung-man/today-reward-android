@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import com.groupon.grox.Store;
 
 import io.reactivex.disposables.CompositeDisposable;
-import xyz.gracefulife.today.notice.FetchNoticesCommand;
-import xyz.gracefulife.today.notice.NoticeState;
+import xyz.gracefulife.today.notices.FetchNoticesCommand;
+import xyz.gracefulife.today.notices.NoticesState;
 import xyz.gracefulife.today.signin.SignInCommand;
 import xyz.gracefulife.today.signin.SignInState;
 
@@ -23,7 +23,7 @@ import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = MainActivity.class.getSimpleName();
 
-  private final Store<NoticeState> store = new Store<>(NoticeState.empty());
+  private final Store<NoticesState> store = new Store<>(NoticesState.empty());
   private final Store<SignInState> signInTestStore = new Store<>(SignInState.empty());
   private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     );
   }
 
-  private void updateUI(NoticeState noticeState) {
-    Log.i(TAG, "updateUI: " + noticeState.notices);
+  private void updateUI(NoticesState noticesState) {
+    Log.i(TAG, "updateUI: " + noticesState.notices);
   }
 
   private void doLog(Throwable throwable) {
