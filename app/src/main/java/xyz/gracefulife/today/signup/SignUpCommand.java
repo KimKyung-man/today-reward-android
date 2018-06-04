@@ -1,7 +1,5 @@
 package xyz.gracefulife.today.signup;
 
-import android.util.Log;
-
 import com.google.firebase.auth.AdditionalUserInfo;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,6 +12,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * 구현의 편리함을 위해 직접 Firebase Auth 와 통신한다.
@@ -26,26 +25,36 @@ public class SignUpCommand implements Command {
   private final SignUpState oldState;
 
   @Override public Observable<? extends Action> actions() {
-    Log.i(TAG, "actions: email is " + oldState.email);
-    return RxFirebaseAuth.createUserWithEmailAndPassword(firebaseAuth, oldState.email, oldState.password)
-        .onErrorReturnItem(new AuthResult() {
-          @Override public FirebaseUser getUser() {
-            return null;
+    return Observable.just(oldState.isValid)
+        .map(valid -> {
+          if (!valid) {
+            throw new IllegalStateException("state not valid");
           }
-
-          @Override public AdditionalUserInfo getAdditionalUserInfo() {
-            return null;
-          }
+          return true;
         })
-        .toObservable()
-        .take(1)
+        .flatMap($ -> RxFirebaseAuth.createUserWithEmailAndPassword(firebaseAuth, oldState.email, oldState.password)
+            .defaultIfEmpty(new EmptyResult())
+            .toObservable()
+            .take(1))
+        .onErrorReturn(throwable -> new EmptyResult())
         .flatMap((Function<AuthResult, ObservableSource<Action>>) authResult -> {
-          if (authResult != null && authResult.getUser() != null) {
+          if (authResult.getUser() != null) {
             return Observable.just(new SignUpAction());
           } else {
             return Observable.error(new IllegalStateException("Sign-up Failed"));
           }
         })
         .onErrorReturn(SignUpErrorAction::new);
+  }
+
+  @NoArgsConstructor
+  public static class EmptyResult implements AuthResult {
+    @Override public FirebaseUser getUser() {
+      return null;
+    }
+
+    @Override public AdditionalUserInfo getAdditionalUserInfo() {
+      return null;
+    }
   }
 }

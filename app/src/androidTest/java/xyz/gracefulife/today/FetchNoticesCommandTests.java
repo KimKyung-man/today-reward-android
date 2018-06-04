@@ -6,8 +6,6 @@ import com.groupon.grox.Store;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.ZoneId;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +21,7 @@ import xyz.gracefulife.today.notices.FetchNoticesCommand;
 import xyz.gracefulife.today.notices.NoticesState;
 
 import static com.groupon.grox.RxStores.states;
+import static xyz.gracefulife.today.LocalDateTimeUtils.now;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -65,7 +64,7 @@ public class FetchNoticesCommandTests {
     testSubscriber.assertValueCount(1);
 
     store.dispatch(new FetchNoticeAction(
-        new Notice("2", "title2", "content2", LocalDateTime.now(ZoneId.of("Z")))
+        new Notice("2", "title2", "content2", now())
     ));
 
     testSubscriber.assertValueCount(2);
@@ -73,7 +72,7 @@ public class FetchNoticesCommandTests {
 
   class TestDataSource implements DataSource<Notice, String> {
     final List<Notice> notices = Collections.singletonList(
-        new Notice("1", "title", "content", LocalDateTime.now(ZoneId.of("Z")))
+        new Notice("1", "title", "content", now())
     );
 
     @Override public Single<Notice> fetch(String s) {

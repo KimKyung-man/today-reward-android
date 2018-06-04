@@ -22,6 +22,7 @@ import lombok.ToString;
 
 @ToString
 public class SignUpErrorAction implements Action<SignUpState> {
+  private static final String TAG = SignUpErrorAction.class.getSimpleName();
 
   @Getter private String msg;
 
@@ -31,6 +32,6 @@ public class SignUpErrorAction implements Action<SignUpState> {
 
   @Override
   public SignUpState newState(SignUpState oldState) {
-    return SignUpState.error(oldState.email, oldState.password, msg);
+    return SignUpState.error(oldState.email, oldState.password, oldState.sex, msg);
   }
 }

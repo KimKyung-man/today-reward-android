@@ -15,6 +15,8 @@
  */
 package xyz.gracefulife.today.signup;
 
+import android.util.Log;
+
 import com.groupon.grox.Action;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +25,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class SignUpAction implements Action<SignUpState> {
+  private static final String TAG = SignUpAction.class.getSimpleName();
+
   @Override
   public SignUpState newState(SignUpState oldState) {
+    Log.i(TAG, "newState: success! " + SignUpState.success(oldState.email));
     return SignUpState.success(oldState.email);
   }
 }
