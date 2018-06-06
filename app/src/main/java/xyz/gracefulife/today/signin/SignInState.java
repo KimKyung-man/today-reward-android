@@ -34,6 +34,10 @@ public class SignInState {
     return new SignInState(EMPTY, EMPTY, Optional.empty(), false, true);
   }
 
+  public static SignInState onChangedState(String email, String password) {
+    return new SignInState(email, password, Optional.empty(), true, false);
+  }
+
   public static SignInState error(String hasEmail, String hasPassword, String error) {
     return new SignInState(hasEmail, hasPassword, Optional.of(error), false, false);
   }
