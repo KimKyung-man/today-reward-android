@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import static xyz.gracefulife.today.LocalDateTimeUtils.now;
+import static xyz.gracefulife.today.ThreeTenUtils.LocalDateTimeUtils.now;
 
 /**
  * Grox + 불변 데이터 형식을 사용하므로,

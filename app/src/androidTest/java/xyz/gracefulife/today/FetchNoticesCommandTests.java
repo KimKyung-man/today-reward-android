@@ -21,7 +21,7 @@ import xyz.gracefulife.today.notices.FetchNoticesCommand;
 import xyz.gracefulife.today.notices.NoticesState;
 
 import static com.groupon.grox.RxStores.states;
-import static xyz.gracefulife.today.LocalDateTimeUtils.now;
+import static xyz.gracefulife.today.ThreeTenUtils.LocalDateTimeUtils.now;
 
 
 @RunWith(AndroidJUnit4.class)
