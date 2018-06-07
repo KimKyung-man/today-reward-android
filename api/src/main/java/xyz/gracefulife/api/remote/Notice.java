@@ -16,7 +16,7 @@ public class Notice implements Parcelable {
   private String id;
   private String title;
   private String contents;
-  private LocalDateTime localDateTime;
+  private LocalDateTime createdAt;
 
   @Override public int describeContents() {
     return 0;
@@ -26,14 +26,14 @@ public class Notice implements Parcelable {
     dest.writeString(this.id);
     dest.writeString(this.title);
     dest.writeString(this.contents);
-    dest.writeSerializable(this.localDateTime);
+    dest.writeSerializable(this.createdAt);
   }
 
   protected Notice(Parcel in) {
     this.id = in.readString();
     this.title = in.readString();
     this.contents = in.readString();
-    this.localDateTime = (LocalDateTime) in.readSerializable();
+    this.createdAt = (LocalDateTime) in.readSerializable();
   }
 
   public static final Creator<Notice> CREATOR = new Creator<Notice>() {
