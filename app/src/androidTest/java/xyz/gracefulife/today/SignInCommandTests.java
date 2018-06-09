@@ -38,7 +38,6 @@ public class SignInCommandTests {
     assertThat(store.getState().error.isPresent(), is(true));
 
     // WHEN 2
-    // WHEN
     store.dispatch(oldState ->
         SignInState.onChangedState("test333@naver.com", "123456"));
 
