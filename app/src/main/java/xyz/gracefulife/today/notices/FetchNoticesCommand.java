@@ -1,5 +1,7 @@
 package xyz.gracefulife.today.notices;
 
+import android.util.Log;
+
 import com.groupon.grox.Action;
 import com.groupon.grox.commands.rxjava2.Command;
 
@@ -12,6 +14,7 @@ import static io.reactivex.schedulers.Schedulers.io;
 
 @AllArgsConstructor
 public class FetchNoticesCommand implements Command {
+  private static final String TAG = FetchNoticesCommand.class.getSimpleName();
   private final DataSource<Notice, String> source;
 
   @Override public Observable<? extends Action> actions() {
@@ -20,6 +23,7 @@ public class FetchNoticesCommand implements Command {
 
   private Observable<? extends Action> fetch() {
     return source.fetchAll()
+        .doOnSuccess(notices -> Log.i(TAG, "fetch: notices = " + notices))
         .subscribeOn(io())
         .map(FetchNoticesAction::new)
         .cast(Action.class)

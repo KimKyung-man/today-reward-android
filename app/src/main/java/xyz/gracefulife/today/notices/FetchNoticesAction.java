@@ -15,6 +15,8 @@
  */
 package xyz.gracefulife.today.notices;
 
+import android.util.Log;
+
 import com.groupon.grox.Action;
 
 import java.util.List;
@@ -24,10 +26,12 @@ import xyz.gracefulife.api.remote.Notice;
 
 @AllArgsConstructor
 public class FetchNoticesAction implements Action<NoticesState> {
+  private static final String TAG = FetchNoticesAction.class.getSimpleName();
   private final List<Notice> notices;
 
   @Override
   public NoticesState newState(NoticesState oldState) {
+    Log.i(TAG, "newState: notices = " + notices);
     return NoticesState.success(notices);
   }
 }

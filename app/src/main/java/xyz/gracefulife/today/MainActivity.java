@@ -9,9 +9,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.groupon.grox.Store;
 
+import durdinapps.rxfirebase2.DocumentSnapshotMapper;
+import durdinapps.rxfirebase2.RxFirestore;
 import io.reactivex.disposables.CompositeDisposable;
+import xyz.gracefulife.api.remote.Notice;
 import xyz.gracefulife.today.notices.FetchNoticesCommand;
 import xyz.gracefulife.today.notices.NoticesState;
 import xyz.gracefulife.today.signin.SignInCommand;
@@ -46,6 +51,20 @@ public class MainActivity extends AppCompatActivity {
             .actions()
             .subscribe(store::dispatch, this::doLog)
     );
+
+    RxFirestore.getCollection(FirebaseFirestore.getInstance().collection("notice"))
+        .subscribe(notices -> Log.i(TAG, "onCreate: notices = " + notices.getDocuments()));
+    FirebaseFirestore.getInstance().collection("notice")
+        .get()
+        .addOnCompleteListener(task -> {
+          if (task.isSuccessful()) {
+            for (DocumentSnapshot document : task.getResult()) {
+              Log.d(TAG, document.getId() + " => " + document.getData());
+            }
+          } else {
+            Log.d(TAG, "Error getting documents: ", task.getException());
+          }
+        });
   }
 
   private void updateUI(NoticesState noticesState) {

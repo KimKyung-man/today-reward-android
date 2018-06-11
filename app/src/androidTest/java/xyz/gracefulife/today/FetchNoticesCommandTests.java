@@ -2,6 +2,8 @@ package xyz.gracefulife.today;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.groupon.grox.Action;
 import com.groupon.grox.Store;
 
 import org.junit.Test;
@@ -10,9 +12,11 @@ import org.junit.runner.RunWith;
 import java.util.Collections;
 import java.util.List;
 
+import durdinapps.rxfirebase2.RxFirestore;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import xyz.gracefulife.api.DataSource;
+import xyz.gracefulife.api.remote.CommonRemoteSource;
 import xyz.gracefulife.api.remote.Notice;
 import xyz.gracefulife.today.notice.FetchNoticeAction;
 import xyz.gracefulife.today.notice.FetchNoticeCommand;
@@ -21,6 +25,7 @@ import xyz.gracefulife.today.notices.FetchNoticesCommand;
 import xyz.gracefulife.today.notices.NoticesState;
 
 import static com.groupon.grox.RxStores.states;
+import static junit.framework.Assert.assertNotNull;
 import static xyz.gracefulife.today.ThreeTenUtils.LocalDateTimeUtils.now;
 
 
@@ -43,6 +48,27 @@ public class FetchNoticesCommandTests {
     // THEN
     testSubscriber.assertSubscribed();
     testSubscriber.assertValueCount(1);
+  }
+
+  @Test
+  public void 파이어스토어_공지_목록조회() {
+    // MOCKING
+    DataSource<Notice, String> source = new CommonRemoteSource<>(
+        id -> RxFirestore.getDocument(FirebaseFirestore.getInstance().collection("notice").document(id)).map(doc -> doc.toObject(Notice.class)).toSingle(),
+        () -> RxFirestore.getCollection(FirebaseFirestore.getInstance().collection("notice"), Notice.class).toSingle()
+    );
+
+    // GIVEN
+    Store<NoticesState> store = new Store<>(NoticesState.empty());
+    FetchNoticesCommand command = new FetchNoticesCommand(source);
+
+    // WHEN
+    final Action fetchNoticesAction = command.actions().blockingFirst();
+    store.dispatch(fetchNoticesAction);
+
+    // THEN
+    assertNotNull(states(store).blockingFirst().notices);
+    System.out.println(states(store).blockingFirst().notices);
   }
 
   @Test
