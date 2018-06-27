@@ -13,10 +13,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.groupon.grox.Store;
 
-import durdinapps.rxfirebase2.DocumentSnapshotMapper;
 import durdinapps.rxfirebase2.RxFirestore;
 import io.reactivex.disposables.CompositeDisposable;
-import xyz.gracefulife.api.remote.Notice;
 import xyz.gracefulife.today.notices.FetchNoticesCommand;
 import xyz.gracefulife.today.notices.NoticesState;
 import xyz.gracefulife.today.signin.SignInCommand;
